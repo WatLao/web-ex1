@@ -232,16 +232,15 @@
 
 (function () {
 
-    function getHeight() {
+    function getPageHeight() {
 
-        const body = document.body;
-        const html = document.documentElement;
+        var body = document.body;
+        var html = document.documentElement;
 
         return Math.max(
             body ? body.scrollHeight : 0,
             body ? body.offsetHeight : 0,
             body ? body.clientHeight : 0,
-
             html ? html.scrollHeight : 0,
             html ? html.offsetHeight : 0,
             html ? html.clientHeight : 0
@@ -251,7 +250,7 @@
 
     function sendHeight() {
 
-        const height = getHeight();
+        var height = getPageHeight();
 
         window.parent.postMessage(
             {
@@ -260,48 +259,54 @@
             },
             "https://www.watlaomelbourne.com.au"
         );
-
     }
 
 
-    /* ໂຫຼດໜ້າ */
+    /* ເມື່ອເປີດໜ້າ */
     window.addEventListener("load", function () {
 
         sendHeight();
 
-        /* ສົ່ງຊ້ຳອີກເທື່ອ */
-        setTimeout(sendHeight, 300);
+        setTimeout(sendHeight, 100);
+        setTimeout(sendHeight, 500);
         setTimeout(sendHeight, 1000);
         setTimeout(sendHeight, 2000);
 
     });
 
 
-    /* ເມື່ອປ່ຽນຂະໜາດ */
-    window.addEventListener("resize", sendHeight);
+    /* ເມື່ອປ່ຽນຂະໜາດ Browser */
+    window.addEventListener("resize", function () {
+
+        setTimeout(sendHeight, 100);
+
+    });
 
 
-    /* ຈັບການປ່ຽນຄວາມສູງ */
+    /* ກວດຈັບການປ່ຽນຂະໜາດ */
     if (window.ResizeObserver) {
 
-        const observer = new ResizeObserver(function () {
+        var resizeObserver = new ResizeObserver(function () {
+
             sendHeight();
+
         });
 
-        observer.observe(document.documentElement);
+        resizeObserver.observe(document.documentElement);
 
         if (document.body) {
-            observer.observe(document.body);
+            resizeObserver.observe(document.body);
         }
-
     }
 
 
-    /* ຈັບເມື່ອ DOM ປ່ຽນ */
+    /* ກວດຈັບເມື່ອເນື້ອຫາປ່ຽນ */
     if (window.MutationObserver) {
 
-        const mutationObserver = new MutationObserver(function () {
-            sendHeight();
+        var mutationObserver = new MutationObserver(function () {
+
+            setTimeout(sendHeight, 50);
+
         });
 
         mutationObserver.observe(document.body, {
@@ -309,8 +314,30 @@
             subtree: true,
             attributes: true
         });
-
     }
+
+
+    /*
+       ສຳຄັນ:
+       ເມື່ອເວັບປ່ຽນ URL
+       ໃຫ້ສົ່ງ height ໃໝ່
+    */
+
+    var lastUrl = location.href;
+
+    setInterval(function () {
+
+        if (location.href !== lastUrl) {
+
+            lastUrl = location.href;
+
+            setTimeout(sendHeight, 300);
+            setTimeout(sendHeight, 1000);
+
+        }
+
+    }, 300);
+
 
 })();
 
