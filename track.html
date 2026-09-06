@@ -56,116 +56,94 @@
   <script src="assets/js/api.js"></script>
   <script src="assets/js/track.js"></script>
   <script>
-
+/*
+ * Cross-origin iframe auto-height helper.
+ * Include this file inside every page rendered in the iframe.
+ */
 (function () {
+  'use strict';
 
-    function getPageHeight() {
+  var allowedParentOrigins = [
+    'https://www.watlaomelbourne.com.au',
+    'https://watlaomelbourne.com.au'
+  ];
+  var lastHeight = 0;
+  var scheduled = false;
 
-        var body = document.body;
-        var html = document.documentElement;
+  function getHeight() {
+    var body = document.body;
+    var html = document.documentElement;
+    return Math.ceil(Math.max(
+      body ? body.scrollHeight : 0,
+      body ? body.offsetHeight : 0,
+      body ? body.clientHeight : 0,
+      html ? html.scrollHeight : 0,
+      html ? html.offsetHeight : 0,
+      html ? html.clientHeight : 0
+    ));
+  }
 
-        return Math.max(
-            body ? body.scrollHeight : 0,
-            body ? body.offsetHeight : 0,
-            body ? body.clientHeight : 0,
-            html ? html.scrollHeight : 0,
-            html ? html.offsetHeight : 0,
-            html ? html.clientHeight : 0
-        );
-    }
+  function getTargetOrigin() {
+    // The parent sends its origin with the request. Before that, use the
+    // production origin so the helper also works when opened directly.
+    return allowedParentOrigins.indexOf(document.referrer ? new URL(document.referrer).origin : '') >= 0
+      ? new URL(document.referrer).origin
+      : allowedParentOrigins[0];
+  }
 
+  function sendHeight(force) {
+    scheduled = false;
+    var height = getHeight();
+    if (!force && height === lastHeight) return;
+    lastHeight = height;
+    window.parent.postMessage({
+      type: 'watlao:iframe-height',
+      height: height,
+      path: window.location.pathname,
+      source: 'watlao-embed'
+    }, getTargetOrigin());
+  }
 
-    function sendHeight() {
+  function scheduleSend(force) {
+    if (scheduled && !force) return;
+    scheduled = true;
+    window.requestAnimationFrame(function () { sendHeight(force); });
+  }
 
-        var height = getPageHeight();
+  window.addEventListener('message', function (event) {
+    if (allowedParentOrigins.indexOf(event.origin) === -1) return;
+    if (!event.data || event.data.type !== 'watlao:request-height') return;
+    sendHeight(true);
+  });
 
-        window.parent.postMessage(
-            {
-                type: "iframeHeight",
-                height: height
-            },
-            "https://www.watlaomelbourne.com.au"
-        );
-    }
-
-
-    /* ເມື່ອເປີດໜ້າ */
-    window.addEventListener("load", function () {
-
-        sendHeight();
-
-        setTimeout(sendHeight, 100);
-        setTimeout(sendHeight, 500);
-        setTimeout(sendHeight, 1000);
-        setTimeout(sendHeight, 2000);
-
+  window.addEventListener('load', function () {
+    scheduleSend(true);
+    [100, 400, 1000, 2000].forEach(function (delay) {
+      window.setTimeout(function () { scheduleSend(true); }, delay);
     });
+  });
 
+  window.addEventListener('resize', function () { scheduleSend(false); });
 
-    /* ເມື່ອປ່ຽນຂະໜາດ Browser */
-    window.addEventListener("resize", function () {
+  if (window.ResizeObserver) {
+    var resizeObserver = new ResizeObserver(function () { scheduleSend(false); });
+    resizeObserver.observe(document.documentElement);
+    if (document.body) resizeObserver.observe(document.body);
+  }
 
-        setTimeout(sendHeight, 100);
-
+  if (window.MutationObserver && document.body) {
+    var mutationObserver = new MutationObserver(function () { scheduleSend(false); });
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true
     });
+  }
 
-
-    /* ກວດຈັບການປ່ຽນຂະໜາດ */
-    if (window.ResizeObserver) {
-
-        var resizeObserver = new ResizeObserver(function () {
-
-            sendHeight();
-
-        });
-
-        resizeObserver.observe(document.documentElement);
-
-        if (document.body) {
-            resizeObserver.observe(document.body);
-        }
-    }
-
-
-    /* ກວດຈັບເມື່ອເນື້ອຫາປ່ຽນ */
-    if (window.MutationObserver) {
-
-        var mutationObserver = new MutationObserver(function () {
-
-            setTimeout(sendHeight, 50);
-
-        });
-
-        mutationObserver.observe(document.body, {
-            childList: true,
-            subtree: true,
-            attributes: true
-        });
-    }
-
-
-    /*
-       ສຳຄັນ:
-       ເມື່ອເວັບປ່ຽນ URL
-       ໃຫ້ສົ່ງ height ໃໝ່
-    */
-
-    var lastUrl = location.href;
-
-    setInterval(function () {
-
-        if (location.href !== lastUrl) {
-
-            lastUrl = location.href;
-
-            setTimeout(sendHeight, 300);
-            setTimeout(sendHeight, 1000);
-
-        }
-
-    }, 300);
-
-
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { scheduleSend(true); });
+  }
 })();
 
 </script>
