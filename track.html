@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track request / ຕິດຕາມການຈ່ອງ</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ========== Hero ========== -->
+  <header class="hero">
+    <svg class="hero__mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M32 4c2 6 6 9 6 14 0 4-3 7-6 7s-6-3-6-7c0-5 4-8 6-14z" fill="#E7C876"/>
+      <path d="M32 26c-4-3-9-4-14-3 2 6 8 10 14 10s12-4 14-10c-5-1-10 0-14 3z" fill="#C1902F"/>
+      <path d="M20 42c3 6 7 9 12 9s9-3 12-9c-4 2-8 3-12 3s-8-1-12-3z" fill="#E7C876"/>
+      <rect x="30" y="50" width="4" height="10" rx="2" fill="#E7C876"/>
+    </svg>
+    <h1>Track your request<br>ຕິດຕາມການຈ່ອງ</h1>
+    <p>Enter the reference code you received to check the status and assigned monks.<br>ປ້ອນລະຫັດອ້າງອີງທີ່ໄດ້ຮັບ ເພື່ອກວດສະຖານະ ແລະ ພຣະທີ່ທາງວັດມອບໝາຍ.</p>
+    <div class="hero__rule"></div>
+  </header>
+
+  <main class="wrap" style="padding-top:28px; padding-bottom:12px;">
+    <div class="card track-card">
+      <div class="track-form">
+        <input class="input" id="code-input" placeholder="WLM-20260903-0001" autocomplete="off">
+        <button class="btn btn--primary" id="track-btn" type="button">Search / ຄົ້ນຫາ</button>
+      </div>
+      <p class="text-muted" style="text-align:center; margin:14px 0 0; font-size:.84rem;">
+        <a href="index.html?new=1">← Back to form / ກັບໄປໜ້າຈ່ອງ</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="foot">© ລະບົບຈ່ອງນິມົນພຣະສົງ · ພັດທະນາໂດຍ <br>COMPUTER TEACH</br></footer>
+
+  <!-- ========== Popup ຜົນການຄົ້ນຫາ ========== -->
+  <div class="modal-overlay" id="track-modal">
+    <div class="modal track-modal">
+      <div class="track-hero" id="track-hero">
+        <div class="track-hero__icon" id="track-icon"></div>
+        <div class="track-hero__label" id="track-label">—</div>
+        <div class="track-hero__code" id="track-code">—</div>
+        <p class="track-hero__msg" id="track-msg"></p>
+        <button class="modal__close" type="button" data-close
+          style="position:absolute; top:10px; right:12px; color:var(--ink-soft);">&times;</button>
+      </div>
+      <div class="modal__body" id="track-body"></div>
+      <div class="modal__foot">
+        <button class="btn btn--ghost" type="button" data-close>Close / ປິດ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/track.js"></script>
+</body>
+</html>

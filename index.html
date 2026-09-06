@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ຈ່ອງນິມົນພຣະສົງ | ລະບົບຈ່ອງອອນລາຍ</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ========== Hero ========== -->
+  <header class="hero">
+    <div class="hero__tools" aria-label="Page tools">
+      <button type="button" class="hero__language" id="language-toggle" aria-label="Switch language">
+        <span data-language-label="lo">English</span>
+        <span data-language-label="en" hidden>ພາສາລາວ</span>
+      </button>
+      <a href="admin/login.html" class="hero__staff">Temple staff / ສຳລັບຝ່າຍວັດ</a>
+    </div>
+    <svg class="hero__mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M32 4c2 6 6 9 6 14 0 4-3 7-6 7s-6-3-6-7c0-5 4-8 6-14z" fill="#E7C876"/>
+      <path d="M32 26c-4-3-9-4-14-3 2 6 8 10 14 10s12-4 14-10c-5-1-10 0-14 3z" fill="#C1902F"/>
+      <path d="M16 40c-4-1-8-1-12 1 3 5 9 8 15 7-1-3-2-6-3-8zM48 40c4-1 8-1 12 1-3 5-9 8-15 7 1-3 2-6 3-8z" fill="#C1902F"/>
+      <path d="M20 42c3 6 7 9 12 9s9-3 12-9c-4 2-8 3-12 3s-8-1-12-3z" fill="#E7C876"/>
+      <rect x="30" y="50" width="4" height="10" rx="2" fill="#E7C876"/>
+    </svg>
+    <h1><span data-language="en">Monk Invitation Request</span><span data-language="lo">ໃບຈ່ອງນິມົນພຣະສົງ</span></h1>
+    <p><span data-language="en">Invite monks for your merit ceremony — please complete the form below and the temple will contact you back.</span><span data-language="lo">ຂໍນິມົນພຣະສົງເພື່ອປະກອບພິທີບຸນຕ່າງໆ — ກະລຸນາກອກຂໍ້ມູນຕາມແບບຟອມລຸ່ມນີ້ ໃຫ້ຄົບຖ້ວນ ທາງວັດຈະຕິດຕໍ່ກັບຄືນ.</span></p>
+    <div class="hero__rule"></div>
+    <a href="track.html" class="hero__cta">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span data-language="en">Have a code? Track your request</span><span data-language="lo">ມີລະຫັດແລ້ວ? ຕິດຕາມການຈ່ອງ</span>
+    </a>
+  </header>
+
+  <main class="wrap" style="padding-top:28px; padding-bottom:12px;">
+
+    <!-- ========== ຟອມ ========== -->
+    <form id="booking-form" class="card stack" novalidate>
+
+      <div class="wizard-progress" id="wiz-progress">
+        <span class="is-active">1</span><span>2</span><span>3</span>
+      </div>
+      <div class="wizard-steps">
+
+      <!-- ພາກ ໑ : ເຈົ້າພາບ -->
+      <div class="wizard-step is-active" data-step="1">
+      <section>
+        <div class="section-head">
+          <div class="section-badge">I</div>
+          <div>
+            <h2>Requester (Host) Information / ຂໍ້ມູນຜູ້ຈ່ອງ (ເຈົ້າພາບ)</h2>
+            <div class="section-sub">Your contact details / ຂໍ້ມູນຕິດຕໍ່ຂອງທ່ານ</div>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label for="host_name">Name and surname / ຊື່ ແລະ ນາມສະກຸນ <span class="req">*</span></label>
+            <input class="input" id="host_name" name="host_name" placeholder="e.g. Mr. Somsavanh / ເຊັ່ນ ທ້າວ ສົມສະຫວັນ">
+          </div>
+          <div class="field">
+            <label for="host_phone">Phone number / ໝາຍເລກໂທລະສັບ <span class="req">*</span></label>
+            <input class="input" id="host_phone" name="host_phone" inputmode="tel" placeholder="04XX XXX XXX">
+          </div>
+          <div class="field">
+            <label for="host_relationship">Relationship to the event / ຄວາມສຳພັນກັບງານ</label>
+            <input class="input" id="host_relationship" name="host_relationship" placeholder="Main host / family rep / ເຈົ້າພາບຫຼັກ / ຕົວແທນຄອບຄົວ">
+          </div>
+          <div class="field">
+            <label for="host_email">Email / ອີເມວ</label>
+            <input class="input" id="host_email" name="host_email" type="email" inputmode="email" placeholder="you@example.com">
+            <span class="hint">For status updates / ໃຊ້ຮັບແຈ້ງເຕືອນສະຖານະການຈ່ອງ</span>
+          </div>
+          <div class="field col-span-2">
+            <label for="host_address">Address / ທີ່ຢູ່</label>
+            <input class="input" id="host_address" name="host_address" placeholder="House no., street, city, country / ບ້ານ, ຖະໜົນ, ເມືອງ, ປະເທດ">
+          </div>
+        </div>
+      </section>
+      <div class="wizard-nav">
+        <span></span>
+        <button type="button" class="btn btn--primary wiz-next">Next / ຕໍ່ໄປ →</button>
+      </div>
+      </div>
+
+      <!-- ພາກ ໒ : ງານ -->
+      <div class="wizard-step" data-step="2">
+      <section>
+        <div class="section-head">
+          <div class="section-badge">II</div>
+          <div>
+            <h2>Event Details / ລາຍລະອຽດຂອງງານ</h2>
+            <div class="section-sub">Date, time and venue / ວັນທີ ເວລາ ແລະ ສະຖານທີ່ຈັດງານ</div>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label for="event_type_id">Type of ceremony / ປະເພດກິດຈະກຳ <span class="req">*</span></label>
+            <select class="input" id="event_type_id" name="event_type_id">
+              <option value="">— Loading… / ກຳລັງໂຫຼດ… —</option>
+            </select>
+            <input class="input choice-custom hidden" id="event_type_custom" name="event_type_custom" placeholder="Enter ceremony type / ພິມປະເພດພິທີເອງ">
+            <button type="button" class="choice-back hidden" data-choice-back="event_type_id">Choose from list / ກັບໄປເລືອກ</button>
+          </div>
+          <div class="field">
+            <label for="event_date">Event date / ວັນທີຈັດງານ <span class="req">*</span></label>
+            <input class="input" id="event_date" name="event_date" type="date">
+            <div id="date-warn" class="date-warn hidden"></div>
+          </div>
+          <div class="grid grid--3 col-span-2">
+            <div class="field">
+              <label for="event_start_time">Ceremony start time / ເວລາເລີ່ມພິທີ</label>
+              <input class="input" id="event_start_time" name="event_start_time" type="time">
+            </div>
+            <div class="field">
+              <label for="event_end_time">End time / ເວລາສິ້ນສຸດ</label>
+              <input class="input" id="event_end_time" name="event_end_time" type="time">
+            </div>
+            <div class="field">
+              <label for="monk_arrival_time">Monk arrival time / ເວລານິມົນພຣະໃຫ້ມາຮອດ</label>
+              <input class="input" id="monk_arrival_time" name="monk_arrival_time" type="time">
+            </div>
+          </div>
+          <div class="field">
+            <label for="venue_type">Venue type / ປະເພດສະຖານທີ່</label>
+            <select class="input" id="venue_type" name="venue_type">
+              <option value="house">Home / ບ້ານເຮືອນ</option>
+              <option value="hall">Hall / office / ຫໍປະຊຸມ / ຫ້ອງການ</option>
+              <option value="hotel">Hotel / restaurant / ໂຮງແຮມ / ຮ້ານອາຫານ</option>
+              <option value="temple">At the temple / ພາຍໃນວັດ</option>
+              <option value="custom">Other / ກຳນົດເອງ</option>
+            </select>
+            <input class="input choice-custom hidden" id="venue_type_custom" name="venue_type_custom" placeholder="Enter your own venue type / ພິມປະເພດສະຖານທີ່ເອງ">
+            <button type="button" class="choice-back hidden" data-choice-back="venue_type">Choose from list / ກັບໄປເລືອກ</button>
+          </div>
+          <div class="field">
+            <label for="venue_name">Venue name / ຊື່ສະຖານທີ່</label>
+            <input class="input" id="venue_name" name="venue_name" placeholder="e.g. house / hall name / ເຊັ່ນ ບ້ານເລກທີ… / ຫໍປະຊຸມ…">
+          </div>
+          <div class="field">
+            <label for="venue_village">Suburb / ບ້ານ</label>
+            <input class="input" id="venue_village" name="venue_village" placeholder="e.g. Cabramatta / ບ້ານ...">
+          </div>
+          <div class="field">
+            <label for="venue_province">State / ລັດ ຫຼື ແຂວງ</label>
+            <input class="input" id="venue_province" name="venue_province" placeholder="NSW, VIC, QLD…">
+          </div>
+        </div>
+      </section>
+      <div class="wizard-nav">
+        <button type="button" class="btn btn--ghost wiz-back">← Back / ກັບຄືນ</button>
+        <button type="button" class="btn btn--primary wiz-next">Next / ຕໍ່ໄປ →</button>
+      </div>
+      </div>
+
+      <!-- ພາກ ໓ : ພຣະສົງ -->
+      <div class="wizard-step" data-step="3">
+      <section>
+        <div class="section-head">
+          <div class="section-badge">III</div>
+          <div>
+            <h2>Monk Requirements / ຄວາມຕ້ອງການພຣະສົງ</h2>
+            <div class="section-sub">Number and additional details / ຈຳນວນ ແລະ ລາຍລະອຽດເພີ່ມເຕີມ</div>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label for="monk_count">Number of monks / ຈຳນວນພຣະທີ່ນິມົນ <span class="req">*</span></label>
+            <input class="input" id="monk_count" name="monk_count" type="number" min="1" value="5">
+            <span class="hint">e.g. 5 or 9 monks (traditional) / ຕົວຢ່າງ 5 ອົງ, 9 ອົງ</span>
+          </div>
+          <div class="field">
+            <label for="transport_by">Monk transport / ການຮັບ-ສົ່ງພຣະ</label>
+            <select class="input" id="transport_by" name="transport_by">
+              <option value="host">Host arranges / ເຈົ້າພາບຮັບ-ສົ່ງເອງ</option>
+              <option value="temple">Ask temple to arrange / ຂໍໃຫ້ທາງວັດຈັດພາຫະນະ</option>
+              <option value="custom">Other / ກຳນົດເອງ</option>
+            </select>
+            <input class="input choice-custom hidden" id="transport_by_custom" name="transport_by_custom" placeholder="Enter your own transport details / ພິມລາຍລະອຽດເອງ">
+            <button type="button" class="choice-back hidden" data-choice-back="transport_by">Choose from list / ກັບໄປເລືອກ</button>
+          </div>
+          <div class="field col-span-2">
+            <label for="offering_notes">Notes / special requests / ໝາຍເຫດ / ຄວາມຕ້ອງການພິເສດ</label>
+            <textarea class="input" id="offering_notes" name="offering_notes"
+              placeholder="e.g. chanting monks, altar table, offerings / ເຊັ່ນ ຂໍພຣະທີ່ສວດໄດ້, ຕ້ອງການໂຕະໝູ່ບູຊາ"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <p class="text-muted" style="font-size:.8rem; margin:4px 0 0;">ℹ️ Your entries are saved on your device for ~5 min until submitted. / ຂໍ້ມູນທີ່ທ່ານປ້ອນຈະຖືກເກັບໄວ້ຊົ່ວຄາວ ~5 ນາທີ.</p>
+      <div class="wizard-nav">
+        <button type="button" class="btn btn--ghost wiz-back">← Back / ກັບຄືນ</button>
+        <button class="btn btn--primary" type="submit" id="submit-btn">Submit request / ສົ່ງຄຳຮ້ອງນິມົນ</button>
+      </div>
+      </div>
+
+      </div><!-- /wizard-steps -->
+
+    </form>
+
+    <!-- ========== Success ========== -->
+    <div class="card hidden" id="success-card">
+      <div class="success-panel">
+        <svg class="success-mark" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="33" cy="33" r="31" fill="#E1EEDF" stroke="#4E7A54" stroke-width="2"/>
+          <path d="M20 34l9 9 18-19" stroke="#4E7A54" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h2 id="success-title">Request submitted / ສົ່ງຄຳຮ້ອງສຳເລັດ</h2>
+        <p class="text-muted" id="success-desc">The temple has received your request and will contact you. Please keep your reference code: / ທາງວັດໄດ້ຮັບຄຳຮ້ອງແລ້ວ ແລະ ຈະຕິດຕໍ່ກັບຄືນ. ກະລຸນາເກັບລະຫັດໄວ້:</p>
+        <div class="success-code" id="success-code">—</div>
+        <p class="text-muted" style="font-size:.84rem; margin-top:6px;">Use this code to track status and see assigned monks. / ໃຊ້ລະຫັດນີ້ຕິດຕາມສະຖານະ ແລະ ເບິ່ງພຣະທີ່ມອບໝາຍ.</p>
+        <div class="form-actions" style="justify-content:center;">
+          <a class="btn btn--primary" id="track-link" href="track.html">Track status / ຕິດຕາມສະຖານະ</a>
+          <button class="btn btn--dark" id="new-booking-btn">New request / ຈ່ອງໃບໃໝ່</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="foot">© ລະບົບຈ່ອງນິມົນພຣະສົງ · ໄປສູ່ເວັບໄຊທ໌ວັດ <br><a href="https://www.watlaomelbourne.com.au/" target="_blank" rel="noopener noreferrer">https://www.watlaomelbourne.com.au/</a></br> </footer>
+
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/lang.js"></script>
+  <script src="assets/js/booking.js"></script>
+
+  <script>
+
+function sendHeight() {
+
+    const height = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+    );
+
+    window.parent.postMessage(
+        {
+            type: "iframeHeight",
+            height: height
+        },
+        "https://www.watlaomelbourne.com.au/2026/09/ex.html"
+    );
+}
+
+
+// ເມື່ອໂຫຼດໜ້າ
+window.addEventListener("load", sendHeight);
+
+
+// ເມື່ອປ່ຽນຂະໜາດ
+window.addEventListener("resize", sendHeight);
+
+
+// ກວດຈັບເມື່ອເນື້ອຫາປ່ຽນ
+const observer = new ResizeObserver(function() {
+    sendHeight();
+});
+
+observer.observe(document.documentElement);
+
+</script>
+</body>
+</html>
