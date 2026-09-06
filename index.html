@@ -230,39 +230,89 @@
 
   <script>
 
-function sendHeight() {
+(function () {
 
-    const height = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.offsetHeight
-    );
+    function getHeight() {
 
-    window.parent.postMessage(
-        {
-            type: "iframeHeight",
-            height: height
-        },
-        "https://www.watlaomelbourne.com.au/"
-    );
-}
+        const body = document.body;
+        const html = document.documentElement;
 
+        return Math.max(
+            body ? body.scrollHeight : 0,
+            body ? body.offsetHeight : 0,
+            body ? body.clientHeight : 0,
 
-// ເມື່ອໂຫຼດໜ້າ
-window.addEventListener("load", sendHeight);
+            html ? html.scrollHeight : 0,
+            html ? html.offsetHeight : 0,
+            html ? html.clientHeight : 0
+        );
+    }
 
 
-// ເມື່ອປ່ຽນຂະໜາດ
-window.addEventListener("resize", sendHeight);
+    function sendHeight() {
+
+        const height = getHeight();
+
+        window.parent.postMessage(
+            {
+                type: "iframeHeight",
+                height: height
+            },
+            "https://www.watlaomelbourne.com.au"
+        );
+
+    }
 
 
-// ກວດຈັບເມື່ອເນື້ອຫາປ່ຽນ
-const observer = new ResizeObserver(function() {
-    sendHeight();
-});
+    /* ໂຫຼດໜ້າ */
+    window.addEventListener("load", function () {
 
-observer.observe(document.documentElement);
+        sendHeight();
+
+        /* ສົ່ງຊ້ຳອີກເທື່ອ */
+        setTimeout(sendHeight, 300);
+        setTimeout(sendHeight, 1000);
+        setTimeout(sendHeight, 2000);
+
+    });
+
+
+    /* ເມື່ອປ່ຽນຂະໜາດ */
+    window.addEventListener("resize", sendHeight);
+
+
+    /* ຈັບການປ່ຽນຄວາມສູງ */
+    if (window.ResizeObserver) {
+
+        const observer = new ResizeObserver(function () {
+            sendHeight();
+        });
+
+        observer.observe(document.documentElement);
+
+        if (document.body) {
+            observer.observe(document.body);
+        }
+
+    }
+
+
+    /* ຈັບເມື່ອ DOM ປ່ຽນ */
+    if (window.MutationObserver) {
+
+        const mutationObserver = new MutationObserver(function () {
+            sendHeight();
+        });
+
+        mutationObserver.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true
+        });
+
+    }
+
+})();
 
 </script>
 </body>
